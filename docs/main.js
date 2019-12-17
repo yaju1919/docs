@@ -26,9 +26,23 @@
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         '-_'
     ].join(''));
+    function encode(str){
+        return str.split('').map(function(v){
+            return ("000"+to64.encode(v.charCodeAt(0)).slice(-3));
+        }).join('');
+    }
+    function decode(str){
+        return str.replace(/.{3}/g, function(n){
+            return String.fromCharCode(to64.decode(n));
+        });
+    }
     //---------------------------------------------------------------------------------
     var h = $("<center>").appendTo($("body"));
     var query = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
+    location.search.slice(1).split('&').map(function(v){
+        var ar = v.split('=');
+        query[ar[0]] = decode(ar[1]);
+    });
     var reg_URL = new RegExp(
         '^(https?:\\/\\/)?'+ // protocol
         '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
@@ -38,19 +52,20 @@
         '(\\#[-a-z\\d_]*)?$','gi'
     ); // fragment locator
     //---------------------------------------------------------------------------------
-    (location.search.length ? view_mode : edit_mode)();
+    (Object.keys(query).length === 0 || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
-        location.search.slice(1).split('&').map(function(v){
-            var ar = v.split('=');
-            query[ar[0]] = to64.decode(ar[1]);
-        });
         $("body").css({
             "background-color": query.color,
             "background-image": "url(" + query.img + ")",
             "color": query.font
         });
         $("<h1>",{text: query.title}).appendTo(h);
-        $("<h3>",{text: query.text}).appendTo(h);
+        var MAX = 64;
+        $("<h3>",{text: query.text}).append(query.text.replace(reg_URL, function(url){
+            var url2 = url;
+            if(url.length > MAX) url2 = url.slice(-MAX) + '…';
+            return $("<a>",{text: url2, href: url, target: "_blank"}).prop("outerHTML");
+        })).appendTo(h);
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
@@ -59,7 +74,7 @@
         query.img = addInput("背景の画像", "画像のurl");
         query.color = addInput("背景の色", "RGB形式カラーコード");
         query.font = addInput("文字の色", "RGB形式カラーコード");
-        query.text = addInput("本文", "650字以内で書いてください。").keyup((function(){
+        query.text = addInput("本文", "650字以内で書いてください。", true).keyup((function(){
             var text = $(this).val();
             $(this).height((text.split('\n').length + 2) + "em");
             show_length.text("現在の文字数:"+text.length);
@@ -71,7 +86,7 @@
             for(var k in query) {
                 var value = query[k].val();
                 if(value.length === 0) continue;
-                array.push([k, to64.encode(value)]);
+                array.push([k, encode(value)]);
             }
             url = location.origin + location.pathname + '?' + array.map(function(v){
                 return v.join('=');
