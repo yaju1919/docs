@@ -84,6 +84,7 @@
         addBtn("URLを生成", function(){
             var array = [];
             for(var k in query) {
+                if(!query[k].val) continue;
                 var value = query[k].val();
                 if(value.length === 0) continue;
                 array.push([k, encode(value)]);
