@@ -41,6 +41,7 @@
     var query = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
+        if(ar.length !== 2) return;
         query[ar[0]] = decode(ar[1]);
     });
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
