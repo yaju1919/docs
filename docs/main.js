@@ -45,13 +45,14 @@
     });
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     //---------------------------------------------------------------------------------
-    (Object.keys(query).length === 0 || query.ver ? edit_mode : view_mode)();
+    (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         $("body").css({
             "background-color": query.color,
             "background-image": "url(" + query.img + ")",
             "color": query.font
         });
+        $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
         var MAX = 64;
         $("<h3>").html(query.text.replace(/\n/g, "<br>").replace(reg_URL, function(url){
@@ -62,7 +63,8 @@
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
-        $("<h1>",{text: "簡単な文書ページが作成できます。"}).appendTo(h);
+        $("title").text("簡易ホームページ作成ツール");
+        $("<h1>",{text: "簡単な文書ページが作成できます。\nURLを作成し、他人と共有できます。"}).appendTo(h);
         query.title = addInput("タイトル");
         query.img = addInput("背景の画像", "画像のurl");
         query.color = addInput("背景の色", "RGB形式カラーコード");
