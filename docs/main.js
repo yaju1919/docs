@@ -76,7 +76,7 @@
         query.font = addInput("文字の色", "RGB形式カラーコード");
         query.text = $("<textarea>", {
             placeholder: "本文\n650字以内で書いてください。"
-        }).keyup((function(){
+        }).appendTo(h).keyup((function(){
             var text = $(this).val();
             $(this).height((text.split('\n').length + 2) + "em");
             show_length.text("現在の文字数:"+text.length);
