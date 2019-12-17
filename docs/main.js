@@ -43,14 +43,7 @@
         var ar = v.split('=');
         query[ar[0]] = decode(ar[1]);
     });
-    var reg_URL = new RegExp(
-        '^(https?:\\/\\/)?'+ // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$','gi'
-    ); // fragment locator
+    var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     //---------------------------------------------------------------------------------
     (Object.keys(query).length === 0 || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
@@ -61,7 +54,7 @@
         });
         $("<h1>",{text: query.title}).appendTo(h);
         var MAX = 64;
-        $("<h3>",{text: query.text}).append(query.text.replace(reg_URL, function(url){
+        $("<h3>").html(query.text.replace(/\n/g, "<br>").replace(reg_URL, function(url){
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(-MAX) + '…';
             return $("<a>",{text: url2, href: url, target: "_blank"}).prop("outerHTML");
@@ -81,7 +74,7 @@
             $(this).height((text.split('\n').length + 2) + "em");
             show_length.text("現在の文字数:"+text.length);
         })).css({
-            width: "80%"
+            width: "70%"
         });
         var show_length = $("<div>").appendTo(h);
         var url = "";
