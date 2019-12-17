@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     function baseN(base){ // N進数を作成するクラス
-        var len = base.length, reg = /^0+/;
+        var len = base.length, reg = /^0+(?=.+$)/;
         this.encode = function(num){ // 10進数をN進数に変換
             if(isNaN(num)) return NaN;
             var str = "", v = num;
@@ -28,7 +28,7 @@
     ].join(''));
     function encode(str){
         return str.split('').map(function(v){
-            return ("000"+to64.encode(v.charCodeAt(0)).slice(-3));
+            return ("000"+to64.encode(v.charCodeAt(0))).slice(-3);
         }).join('');
     }
     function decode(str){
@@ -74,11 +74,15 @@
         query.img = addInput("背景の画像", "画像のurl");
         query.color = addInput("背景の色", "RGB形式カラーコード");
         query.font = addInput("文字の色", "RGB形式カラーコード");
-        query.text = addInput("本文", "650字以内で書いてください。", true).keyup((function(){
+        query.text = $("<textarea>", {
+            placeholder: "本文\n650字以内で書いてください。"
+        }).keyup((function(){
             var text = $(this).val();
             $(this).height((text.split('\n').length + 2) + "em");
             show_length.text("現在の文字数:"+text.length);
-        }));
+        })).css({
+            width: "80%"
+        });
         var show_length = $("<div>").appendTo(h);
         var url = "";
         addBtn("URLを生成", function(){
@@ -105,8 +109,8 @@
             body.removeChild(e);
         });
         var show_url = $("<div>").appendTo(h);
-        function addInput(title, placeholder, textarea_flag){
-            return $(textarea_flag ? "<textarea>" : "<input>",{
+        function addInput(title, placeholder){
+            return $("<input>",{
                 placeholder: placeholder
             }).appendTo($("<div>",{text: title + ':'}).appendTo(h));
         }
