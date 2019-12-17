@@ -54,17 +54,17 @@
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
-        var MAX = 64;
+        var MAX = 50;
         $("<h3>").html(query.text.replace(/\n/g, "<br>").replace(reg_URL, function(url){
             var url2 = url;
-            if(url.length > MAX) url2 = url.slice(-MAX) + '…';
+            if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
             return $("<a>",{text: url2, href: url, target: "_blank"}).prop("outerHTML");
         })).appendTo(h);
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
-        $("<h1>",{text: "簡単な文書ページが作成できます。\nURLを作成し、他人と共有できます。"}).appendTo(h);
+        $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
         query.title = addInput("タイトル");
         query.img = addInput("背景の画像", "画像のurl");
         query.color = addInput("背景の色", "RGB形式カラーコード");
