@@ -14,7 +14,7 @@
         }
         this.decode = function(str){ // N進数を10進数に変換
             return String(str).replace(reg,"").split("").reverse().map(function(v,i){
-                return base.indexOf(v) * (len ** i);
+                return base.indexOf(v) * Math.pow(len, i);
             }).reduce(function(total, v){
                 return total + v;
             });
