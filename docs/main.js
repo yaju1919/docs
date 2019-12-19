@@ -51,9 +51,9 @@
         });
     }
     //---------------------------------------------------------------------------------
-    var h = $("<div>").appendTo($("body")).css({
-        "text-align": "center",
-    });
+    var h = $("<div>").appendTo($("body").css({
+        "text-align": "center"
+    }));
     var query = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
@@ -64,16 +64,14 @@
     //---------------------------------------------------------------------------------
     (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
+        var color = $("<span>").css("background-color",query.color).appendTo(h).css('color').match(/[0-9]+/g);
+        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
         $("body").css({
+            "background": "linear-gradient(" + rgba + "," + rgba + ")",
             "background-image": "url(" + query.img + ")",
-            "color": query.font
-        });
-        h.css({
-            "background-color": query.color,
-            opacity: query.opacity,
-            "text-align": query.pos ? query.pos === "1" ? "left" : "right" : "center",
-            width: "100%",
-            height: "100%",
+            "background-size": "cover",
+            "color": query.font,
+            "text-align": query.pos || query.pos === "0" ? query.pos === "1" ? "left" : "right" : "center",
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
