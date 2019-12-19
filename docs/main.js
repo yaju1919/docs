@@ -89,7 +89,7 @@
             if(btm) {
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
-                ].indexOf(btm[0]) !== -1) a = $("<img>",{src: url, alt: "画像"}).append(a);
+                ].indexOf(btm[0].slice(1)) !== -1) a = $("<img>",{src: url, alt: "画像"}).append(a);
             }
             return a.prop("outerHTML");
         })).appendTo(h);
