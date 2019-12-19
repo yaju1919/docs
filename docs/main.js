@@ -71,7 +71,9 @@
         h.css({
             "background-color": query.color,
             opacity: query.opacity,
-            "text-align": query.pos ? query.pos === 1 ? "left" : "right" : "center",
+            "text-align": query.pos ? query.pos === "1" ? "left" : "right" : "center",
+            width: "100%",
+            height: "100%",
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
