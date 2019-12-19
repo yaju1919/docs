@@ -64,7 +64,7 @@
     //---------------------------------------------------------------------------------
     (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
-        var color = $("<span>").css("background-color",query.color).appendTo(h).css('color').match(/[0-9]+/g);
+        var color = $("<span>").css("background-color","red").appendTo(h).hide().css('background-color').match(/[0-9]+/g);
         var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
         $("body").css({
             "background": "linear-gradient(" + rgba + "," + rgba + ")",
