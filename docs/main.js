@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    function baseN(base){ // N進数を作成するクラス
+    function BaseN(base){ // N進数を作成するクラス
         var len = base.length, reg = /^0+(?=.+$)/;
         this.encode = function(num){ // 10進数をN進数に変換
             if(isNaN(num)) return NaN;
@@ -11,33 +11,49 @@
                 v /= len;
             }
             return str.replace(reg,"");
-        }
+        };
         this.decode = function(str){ // N進数を10進数に変換
             return String(str).replace(reg,"").split("").reverse().map(function(v,i){
                 return base.indexOf(v) * Math.pow(len, i);
             }).reduce(function(total, v){
                 return total + v;
             });
-        }
+        };
     }
-    var to64 = new baseN([
+    // 1 : 0~9 a~z A~Z → 無圧縮、左端に_(アンダーバー)を追加する
+    // 2 : 62進数の二桁、左端に-(ハイフン)を追加する
+    // 3 : 62進数の三桁、左端に%(パーセント)を追加する
+    var base_str = [
         '0123456789',
         'abcdefghijklmnopqrstuvwxyz',
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-        '-_'
-    ].join(''));
+    ].join('');
+    var to62 = new BaseN(base_str);
     function encode(str){
         return str.split('').map(function(v){
-            return ("000"+to64.encode(v.charCodeAt(0))).slice(-3);
-        }).join('');
+            if(base_str.indexOf(v) !== -1) return '_' + v + '_';
+            else {
+                var str = to62.encode(v.charCodeAt(0));
+                if(str.length < 3) return '-' + ("00" + str).slice(-2) + '-';
+                else return '%' + ("000" + str).slice(-3) + '%';
+            }
+        }).join('').replace(/(_|-|%)\1/g,"").replace(/(_|-|%)(?=(_|-|%))/g,"").slice(0,-1);
     }
     function decode(str){
-        return str.replace(/.{3}/g, function(n){
-            return String.fromCharCode(to64.decode(n));
+        return str.replace(/(_|-|%).*?/g, function(v){
+            var s = v.slice(1);
+            if(v[0] === '_') return s;
+            else {
+                return s.replace(new RegExp(".{" + (v[0] === '-' ? "2" : "3") + "}", 'g'), function(n){
+                    return String.fromCharCode(to62.decode(n));
+                });
+            }
         });
     }
     //---------------------------------------------------------------------------------
-    var h = $("<center>").appendTo($("body"));
+    var h = $("<div>").appendTo($("body")).css({
+        "text-align": "center",
+    });
     var query = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
