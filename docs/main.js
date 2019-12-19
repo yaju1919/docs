@@ -65,9 +65,13 @@
     (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         $("body").css({
-            "background-color": query.color,
             "background-image": "url(" + query.img + ")",
             "color": query.font
+        });
+        h.css({
+            "background-color": query.color,
+            opacity: query.opacity,
+            "text-align": query.pos ? query.pos === 1 ? "left" : "right" : "center",
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
@@ -82,10 +86,22 @@
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
-        query.title = addInput("タイトル");
+        query.title = addInput("タイトル", "ページのタイトル");
         query.img = addInput("背景の画像", "画像のurl");
-        query.color = addInput("背景の色", "RGB形式カラーコード");
-        query.font = addInput("文字の色", "RGB形式カラーコード");
+        query.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
+        query.opacity = addInput("背景の色の透過度", "0~1").attr({
+            type: "range",
+            min: 0,
+            max: 1,
+            step: 0.1,
+            value: 0.5
+        });
+        query.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
+        query.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
+        $("<option>",{text:"左寄り"}).val(1).appendTo(query.pos);
+        $("<option>",{text:"真ん中"}).val(0).appendTo(query.pos);
+        $("<option>",{text:"右寄り"}).val(2).appendTo(query.pos);
+        query.pos.val(0);
         query.text = $("<textarea>", {
             placeholder: "本文\n650字以内で書いてください。"
         }).appendTo(h).keyup((function(){
