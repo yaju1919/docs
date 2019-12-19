@@ -67,12 +67,13 @@
         $("body").css({
             "background-image": "url(" + query.img + ")",
             "color": query.font,
-            "text-align": query.pos || query.pos !== "0" ? query.pos === "1" ? "right" : "left" : "center",
+            "text-align": !query.pos || query.pos === "2" ? "center" : query.pos === "3" ? "right" : "left",
         });
         var color = $("<span>").css("background-color",query.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
         var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
         h.css({
-            background: rgba
+            background: rgba,
+            height: "100%"
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
@@ -99,9 +100,9 @@
         });
         query.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
         query.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
-        $("<option>",{text:"左寄り"}).val(2).appendTo(query.pos);
-        $("<option>",{text:"真ん中"}).val(0).appendTo(query.pos);
-        $("<option>",{text:"右寄り"}).val(1).appendTo(query.pos);
+        $("<option>",{text:"左寄り"}).val(1).appendTo(query.pos);
+        $("<option>",{text:"真ん中"}).val(2).appendTo(query.pos);
+        $("<option>",{text:"右寄り"}).val(3).appendTo(query.pos);
         query.pos.val(0);
         h.append("<br>");
         query.text = $("<textarea>", {
