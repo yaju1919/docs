@@ -104,6 +104,7 @@
         $("<option>",{text:"真ん中"}).val(0).appendTo(query.pos);
         $("<option>",{text:"右寄り"}).val(2).appendTo(query.pos);
         query.pos.val(0);
+        h.append("<br>");
         query.text = $("<textarea>", {
             placeholder: "本文\n650字以内で書いてください。"
         }).appendTo(h).keyup((function(){
