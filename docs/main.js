@@ -54,63 +54,69 @@
     var h = $("<div>").appendTo($("body").css({
         "text-align": "center"
     }));
-    var query = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
+    var q = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
         if(ar.length !== 2) return;
-        query[ar[0]] = decode(ar[1]);
+        q[ar[0]] = decode(ar[1]);
     });
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     //---------------------------------------------------------------------------------
-    (!location.search.length || query.ver ? edit_mode : view_mode)();
+    (!location.search.length || q.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         $("body").css({
             "background-attachment": "fixed", // コンテンツの高さが画像の高さより大きい時、動かないように固定
             "background-position": "center center",// 画像を常に天地左右の中央に配置
             "background-size": "cover", // 表示するコンテナの大きさに基づいて、背景画像を調整
             "background-repeat": "no-repeat", // 画像をタイル状に繰り返し表示しない
-            "background-image": "url(" + query.img + ")",
-            "color": query.font,
-            "text-align": !query.pos || query.pos === "2" ? "center" : query.pos === "3" ? "right" : "left",
+            "background-image": q.img ? "url(" + q.img + ")" : "",
+            "color": q.font,
+            "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
         });
-        var color = $("<span>").css("background-color",query.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
-        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
+        var color = $("<span>").css("background-color",q.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
+        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + q.opacity + ")";
         h.css({
             background: rgba,
-            height: "100%"
         });
-        $("title").text(query.title);
-        $("<h1>",{text: query.title}).appendTo(h);
+        $("title").text(q.title);
+        $("<h1>",{text: q.title}).appendTo(h);
         var MAX = 50;
-        $("<h3>").html(query.text.replace(/\n/g, "<br>").replace(reg_URL, function(url){
+        $("<h3>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
-            return $("<a>",{text: url2, href: url, target: "_blank"}).prop("outerHTML");
+            var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
+            var btm = url.match(/\.+$/);
+            if(btm) {
+                if([
+                    "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
+                ].indexOf(btm[0]) !== -1) a = $("<img>",{src: url, alt: "画像"}).append(a);
+            }
+            return a.prop("outerHTML");
         })).appendTo(h);
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
-        query.title = addInput("タイトル", "ページのタイトル");
-        query.img = addInput("背景の画像", "画像のurl").val("https://i.imgur.com/iJ16x8q.jpg");
-        query.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
-        query.opacity = addInput("背景の色の透過度", "0~1").attr({
+        q.title = addInput("タイトル", "ページのタイトル");
+        q.img = addInput("背景の画像", "画像のurl").val("https://i.imgur.com/iJ16x8q.jpg");
+        q.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
+        q.opacity = addInput("背景の色の透過度", "0~1").attr({
             type: "range",
             min: 0,
             max: 1,
-            step: 0.1,
-            value: 0.5
+            step: 0.01,
+            value: 0.4
         });
-        query.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
-        query.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
-        $("<option>",{text:"左寄り"}).val(1).appendTo(query.pos);
-        $("<option>",{text:"真ん中"}).val(2).appendTo(query.pos);
-        $("<option>",{text:"右寄り"}).val(3).appendTo(query.pos);
-        query.pos.val(2);
+        q.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
+        q.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
+        $("<option>",{text:"左寄り"}).val(1).appendTo(q.pos);
+        $("<option>",{text:"真ん中"}).val(2).appendTo(q.pos);
+        $("<option>",{text:"右寄り"}).val(3).appendTo(q.pos);
+        q.pos.val(2);
         h.append("<br>");
-        query.text = $("<textarea>", {
-            placeholder: "本文\n650字以内で書いてください。"
+        q.text = $("<textarea>", {
+            placeholder: "本文の内容をここに書いてください。"
         }).appendTo(h).keyup((function(){
             var text = $(this).val();
             $(this).height((text.split('\n').length + 2) + "em");
@@ -122,9 +128,9 @@
         var url = "";
         addBtn("URLを生成", function(){
             var array = [];
-            for(var k in query) {
-                if(!query[k].val) continue;
-                var value = query[k].val();
+            for(var k in q) {
+                if(!q[k].val) continue;
+                var value = q[k].val();
                 if(value.length === 0) continue;
                 array.push([k, encode(value)]);
             }
