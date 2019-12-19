@@ -64,17 +64,15 @@
     //---------------------------------------------------------------------------------
     (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
-        window.q = query;
-        var color = $("<span>").css("background-color","red").appendTo(h).hide().css('background-color').match(/[0-9]+/g);
-        window.c= color;
-        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
-        window.r = rgba;
         $("body").css({
-            "background": "linear-gradient(" + rgba + "," + rgba + ")",
             "background-image": "url(" + query.img + ")",
-            "background-size": "cover",
             "color": query.font,
-            "text-align": query.pos || query.pos === "0" ? query.pos === "1" ? "left" : "right" : "center",
+            "text-align": query.pos || query.pos !== "0" ? query.pos === "1" ? "right" : "left" : "center",
+        });
+        var color = $("<span>").css("background-color",query.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
+        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
+        h.css({
+            background: rgba
         });
         $("title").text(query.title);
         $("<h1>",{text: query.title}).appendTo(h);
@@ -101,9 +99,9 @@
         });
         query.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
         query.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
-        $("<option>",{text:"左寄り"}).val(1).appendTo(query.pos);
+        $("<option>",{text:"左寄り"}).val(2).appendTo(query.pos);
         $("<option>",{text:"真ん中"}).val(0).appendTo(query.pos);
-        $("<option>",{text:"右寄り"}).val(2).appendTo(query.pos);
+        $("<option>",{text:"右寄り"}).val(1).appendTo(query.pos);
         query.pos.val(0);
         h.append("<br>");
         query.text = $("<textarea>", {
