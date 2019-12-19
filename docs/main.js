@@ -78,7 +78,7 @@
         h.css({
             background: rgba,
         });
-        $("title").text(q.title);
+        $("title").text(q.title ? q.title : "untitled");
         $("<h1>",{text: q.title}).appendTo(h);
         var MAX = 50;
         $("<h3>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
