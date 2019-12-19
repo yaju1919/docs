@@ -64,8 +64,11 @@
     //---------------------------------------------------------------------------------
     (!location.search.length || query.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
+        window.q = query;
         var color = $("<span>").css("background-color","red").appendTo(h).hide().css('background-color').match(/[0-9]+/g);
+        window.c= color;
         var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + query.opacity + ")";
+        window.r = rgba;
         $("body").css({
             "background": "linear-gradient(" + rgba + "," + rgba + ")",
             "background-image": "url(" + query.img + ")",
