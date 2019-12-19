@@ -40,7 +40,7 @@
         }).join('').replace(/(_|-|%)\1/g,"").replace(/(_|-|%)(?=(_|-|%))/g,"").slice(0,-1);
     }
     function decode(str){
-        return str.replace(/(_|-|%).*?/g, function(v){
+        return str.replace(/(_|-|%)[^_\-%]*/g, function(v){
             var s = v.slice(1);
             if(v[0] === '_') return s;
             else {
