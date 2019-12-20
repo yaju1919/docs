@@ -173,8 +173,10 @@
         });
         var show_url = $("<div>").appendTo(h);
         //---------------------------------------------------------------------
-        for(var k in q) {
-            if(q[k].val) q[k].val(q_copy[k]);
+        if(location.search.length){
+            for(var k in q) {
+                if(q[k].val) q[k].val(q_copy[k]);
+            }
         }
         //---------------------------------------------------------------------
         function addInput(title, placeholder){
