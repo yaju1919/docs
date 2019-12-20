@@ -55,7 +55,7 @@
                     if(v[0] === rule[k]){
                         digit = k;
                         break;
-                    } 
+                    }
                 }
                 return s.replace(new RegExp(".{" + digit + "}", 'g'), function(n){
                     return String.fromCharCode(to62.decode(n));
@@ -83,15 +83,16 @@
             "background-size": "cover", // 表示するコンテナの大きさに基づいて、背景画像を調整
             "background-repeat": "no-repeat", // 画像をタイル状に繰り返し表示しない
             "background-image": q.img ? "url(" + q.img + ")" : "",
+            "background-color": "#464646", // 背景画像が読み込まれる前に表示される背景のカラー
             "color": q.font,
             "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
         });
         var color = $("<span>").css("background-color",q.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
-        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + q.opacity + ")";
+        var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + q.alpha + ")";
         h.css({
             background: rgba,
         });
-        $("title").text(q.title ? q.title : "untitled");
+        $("title").text(q.ttl ? q.ttl : "untitled");
         $("<h1>",{text: q.title}).appendTo(h);
         var MAX = 50;
         $("<h3>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
@@ -111,10 +112,10 @@
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
-        q.title = addInput("タイトル", "ページのタイトル");
-        q.img = addInput("背景の画像", "画像のurl").val("https://i.imgur.com/iJ16x8q.jpg");
+        q.ttl = addInput("タイトル", "ページのタイトル");
+        q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
         q.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
-        q.opacity = addInput("背景の色の透過度", "0~1").attr({
+        q.alpha = addInput("背景の色の透過度", "0~1").attr({
             type: "range",
             min: 0,
             max: 1,
@@ -129,7 +130,7 @@
         q.pos.val(2);
         h.append("<br>");
         q.text = $("<textarea>", {
-            placeholder: "本文の内容をここに書いてください。"
+            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。"
         }).appendTo(h).keyup((function(){
             var text = $(this).val();
             $(this).height((text.split('\n').length + 2) + "em");
