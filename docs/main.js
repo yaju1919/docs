@@ -35,13 +35,16 @@
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
     ].join('');
     var to62 = new BaseN(base_str);
+    function repeat(char,count) {
+        return Array(count*1+1).join(char);
+    };
     function encode(str){
         return str.split('').map(function(v){
             if(base_str.indexOf(v) !== -1) return '_' + v + '_';
             else {
                 var str = to62.encode(v.charCodeAt(0));
                 var len = str.length;
-                return rule[len] + ('0'.repeat(len) + str).slice(-len) + rule[len];
+                return rule[len] + (repeat('0',len) + str).slice(-len) + rule[len];
             }
         }).join('').replace(/(_|-|\.|~)\1/g,"").replace(/(_|-|\.|~)(?=(_|-|\.|~))/g,"").slice(0,-1);
     }
