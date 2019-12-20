@@ -141,13 +141,14 @@
         $("<option>",{text:"右寄り"}).val(3).appendTo(q.pos);
         q.pos.val(2);
         h.append("<br>");
+        function shape(){
+            var text = q.text.val();
+            q.text.height((text.split('\n').length + 2) + "em");
+            show_length.text("現在の文字数:"+text.length);
+        }
         q.text = $("<textarea>", {
             placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。"
-        }).appendTo(h).keyup((function(){
-            var text = $(this).val();
-            $(this).height((text.split('\n').length + 2) + "em");
-            show_length.text("現在の文字数:"+text.length);
-        })).css({
+        }).appendTo(h).keyup(shape).click(shape).css({
             width: "70%"
         });
         var show_length = $("<div>").appendTo(h);
