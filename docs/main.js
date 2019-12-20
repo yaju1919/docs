@@ -197,12 +197,12 @@
             });
             var check = $("<input>",{type:"checkbox"}).prependTo(btn);
             set(default_flag);
-            return { val: function(bool){
-                if(typeof bool === "boolean"){
-                    set(bool);
+            return {
+                val: function(bool){
+                    if(["string","boolean"].indexOf(typeof bool)!==-1) set(bool);
+                    else return flag ? '1' : '0';
                 }
-                else return flag ? '1' : '0';
-            } };
+            };
         }
         function copy(str){
             var e = document.createElement("textarea");
