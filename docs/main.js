@@ -41,7 +41,7 @@
             else {
                 var str = to62.encode(v.charCodeAt(0));
                 var len = str.length;
-                rule[len] + ('0'.repeat(len) + str).slice(-len) + rule[len];
+                return rule[len] + ('0'.repeat(len) + str).slice(-len) + rule[len];
             }
         }).join('').replace(/(_|-|\.|~)\1/g,"").replace(/(_|-|\.|~)(?=(_|-|\.|~))/g,"").slice(0,-1);
     }
@@ -52,7 +52,7 @@
             else {
                 var digit;
                 for(var k in rule){
-                    if(v === rule[k]){
+                    if(v[0] === rule[k]){
                         digit = k;
                         break;
                     } 
