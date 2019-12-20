@@ -84,7 +84,7 @@
             "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
             padding: "1em"
         });
-        if(q.repeat === '1') {
+        if(q.repeat !== '1') {
             $("body").css({
                 "background-attachment": "fixed", // コンテンツの高さが画像の高さより大きい時、動かないように固定
                 "background-position": "center center",// 画像を常に天地左右の中央に配置
