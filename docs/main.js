@@ -67,7 +67,7 @@
     var h = $("<div>").appendTo($("body").css({
         "text-align": "center"
     }));
-    var q = {}; // title = "タイトル", text = "コンテンツ", background = "背景"
+    var q = {}; // クエリ
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
         if(ar.length !== 2) return;
@@ -93,7 +93,7 @@
             background: rgba,
         });
         $("title").text(q.ttl ? q.ttl : "untitled");
-        $("<h1>",{text: q.title}).appendTo(h);
+        $("<h1>",{text: q.ttl}).appendTo(h);
         var MAX = 50;
         $("<h3>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
             var url2 = url;
