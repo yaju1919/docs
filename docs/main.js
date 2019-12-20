@@ -96,7 +96,8 @@
         var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + q.alpha + ")";
         h.css({
             background: rgba,
-            padding: "1em"
+            padding: "1em",
+            "border-radius": "20px 20px 20px 20px",
         });
         $("title").text(q.ttl ? q.ttl : "untitled");
         $("<h1>",{text: q.ttl}).appendTo(h);
