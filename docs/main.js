@@ -199,7 +199,7 @@
             set(default_flag);
             return {
                 val: function(bool){
-                    if(["string","boolean"].indexOf(typeof bool)!==-1) set(bool);
+                    if(typeof bool === "string") set(bool !== '0');
                     else return flag ? '1' : '0';
                 }
             };
