@@ -20,9 +20,15 @@
             });
         };
     }
-    // 1 : 0~9 a~z A~Z → 無圧縮、左端に_(アンダーバー)を追加する
-    // 2 : 62進数の二桁、左端に-(ハイフン)を追加する
-    // 3 : 62進数の三桁、左端に%(パーセント)を追加する
+    // 0 : 0~9 a~z A~Z → 無圧縮、左端に_(アンダーバー)を追加する
+    // 1 : 62進数の一桁、左端に-(ハイフン)を追加する
+    // 2 : 62進数の二桁、左端に.(ドット)を追加する
+    // 3 : 62進数の三桁、左端に~(チルダ)を追加する
+    var rule = {
+        1: '-',
+        2: '.',
+        3: '~'
+    };
     var base_str = [
         '0123456789',
         'abcdefghijklmnopqrstuvwxyz',
@@ -34,17 +40,24 @@
             if(base_str.indexOf(v) !== -1) return '_' + v + '_';
             else {
                 var str = to62.encode(v.charCodeAt(0));
-                if(str.length < 3) return '-' + ("00" + str).slice(-2) + '-';
-                else return '%' + ("000" + str).slice(-3) + '%';
+                var len = str.length;
+                rule[len] + ('0'.repeat(len) + str).slice(-len) + rule[len];
             }
-        }).join('').replace(/(_|-|%)\1/g,"").replace(/(_|-|%)(?=(_|-|%))/g,"").slice(0,-1);
+        }).join('').replace(/(_|-|\.|~)\1/g,"").replace(/(_|-|\.|~)(?=(_|-|\.|~))/g,"").slice(0,-1);
     }
     function decode(str){
-        return str.replace(/(_|-|%)[^_\-%]*/g, function(v){
+        return str.replace(/(_|-|\.|~)[^_\-\.~]*/g, function(v){
             var s = v.slice(1);
             if(v[0] === '_') return s;
             else {
-                return s.replace(new RegExp(".{" + (v[0] === '-' ? "2" : "3") + "}", 'g'), function(n){
+                var digit;
+                for(var k in rule){
+                    if(v === rule[k]){
+                        digit = k;
+                        break;
+                    } 
+                }
+                return s.replace(new RegExp(".{" + digit + "}", 'g'), function(n){
                     return String.fromCharCode(to62.decode(n));
                 });
             }
@@ -109,7 +122,7 @@
             value: 0.4
         });
         q.font = addInput("文字の色", "RGB形式カラーコード").val("#FFFFFF");
-        q.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h))
+        q.pos = $("<select>").appendTo($("<span>",{text:"配置:"}).appendTo(h));
         $("<option>",{text:"左寄り"}).val(1).appendTo(q.pos);
         $("<option>",{text:"真ん中"}).val(2).appendTo(q.pos);
         $("<option>",{text:"右寄り"}).val(3).appendTo(q.pos);
