@@ -70,15 +70,16 @@
     var h = $("<div>").appendTo($("body").css({
         "text-align": "center"
     }));
-    var q = {}; // クエリ
+    var q = {}, q_copy = {}; // クエリ
     location.search.slice(1).split('&').map(function(v){
         var ar = v.split('=');
         if(ar.length !== 2) return;
         q[ar[0]] = decode(ar[1]);
+        q_copy[ar[0]] = q[ar[0]];
     });
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     //---------------------------------------------------------------------------------
-    (!location.search.length || q.ver ? edit_mode : view_mode)();
+    (q.edit === '0' ? view_mode : edit_mode)();
     function view_mode(){ // 閲覧モード
         $("body").css({
             "background-image": q.img ? "url(" + q.img + ")" : "",
@@ -120,6 +121,7 @@
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
+        q.edit = 0;
         $("title").text("簡易ホームページ作成ツール");
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
         q.ttl = addInput("タイトル", "ページのタイトル");
@@ -166,15 +168,14 @@
             $("<a>",{text: url, href: url, target: "_blank"}).appendTo(show_url);
         });
         addBtn("コピー", function(){
-            var e = document.createElement("textarea");
-            e.textContent = url;
-            var body = document.getElementsByTagName("body")[0];
-            body.appendChild(e);
-            e.select();
-            document.execCommand('copy');
-            body.removeChild(e);
+            copy(url);
         });
         var show_url = $("<div>").appendTo(h);
+        //---------------------------------------------------------------------
+        for(var k in q) {
+            if(q[k].val) q[k].val(q_copy[k]);
+        }
+        //---------------------------------------------------------------------
         function addInput(title, placeholder){
             return $("<input>",{
                 placeholder: placeholder
@@ -196,7 +197,21 @@
             });
             var check = $("<input>",{type:"checkbox"}).prependTo(btn);
             set(default_flag);
-            return { val: function(){ return flag ? '1' : '0'; } };
+            return { val: function(bool){
+                if(typeof bool === "boolean"){
+                    set(bool);
+                }
+                else return flag ? '1' : '0';
+            } };
+        }
+        function copy(str){
+            var e = document.createElement("textarea");
+            e.textContent = str;
+            var body = document.getElementsByTagName("body")[0];
+            body.appendChild(e);
+            e.select();
+            document.execCommand('copy');
+            body.removeChild(e);
         }
     }
     //---------------------------------------------------------------------------------
