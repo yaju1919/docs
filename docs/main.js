@@ -78,15 +78,20 @@
     (!location.search.length || q.ver ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         $("body").css({
-            "background-attachment": "fixed", // コンテンツの高さが画像の高さより大きい時、動かないように固定
-            "background-position": "center center",// 画像を常に天地左右の中央に配置
-            "background-size": "cover", // 表示するコンテナの大きさに基づいて、背景画像を調整
-            "background-repeat": "no-repeat", // 画像をタイル状に繰り返し表示しない
             "background-image": q.img ? "url(" + q.img + ")" : "",
             "background-color": "#464646", // 背景画像が読み込まれる前に表示される背景のカラー
             "color": q.font,
             "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
+            padding: "1em"
         });
+        if(q.repeat) {
+            $("body").css({
+                "background-attachment": "fixed", // コンテンツの高さが画像の高さより大きい時、動かないように固定
+                "background-position": "center center",// 画像を常に天地左右の中央に配置
+                "background-size": "cover", // 表示するコンテナの大きさに基づいて、背景画像を調整
+                "background-repeat": "no-repeat", // 画像をタイル状に繰り返し表示しない
+            });
+        }
         var color = $("<span>").css("background-color",q.color).appendTo(h).hide().css('background-color').match(/[0-9]+/g);
         var rgba = "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + q.alpha + ")";
         h.css({
@@ -114,6 +119,7 @@
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
         q.ttl = addInput("タイトル", "ページのタイトル");
         q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
+        q.repeat = addBtn_toggle("背景の画像を並べて表示する");
         q.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
         q.alpha = addInput("背景の色の透過度", "0~1").attr({
             type: "range",
@@ -171,6 +177,21 @@
         }
         function addBtn(title, func){
             return $("<button>",{text:title}).click(func).appendTo(h);
+        }
+        function addBtn_toggle(title, func, default_flag){
+            var flag;
+            function set(bool){
+                flag = bool ? '1' : '0';
+                btn.css("background-color", flag ? "orange" : "gray");
+                check.prop("checked", flag);
+                if(func) func(flag);
+            }
+            var btn = addBtn(title, function(){
+                set(!flag);
+            }).append(check);
+            var check = $("<input>",{type:"checkbox"}).prependTo(btn);
+            set(default_flag);
+            return { val: function(){ return flag; } };
         }
     }
     //---------------------------------------------------------------------------------
