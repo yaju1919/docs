@@ -101,7 +101,7 @@
         $("title").text(q.ttl ? q.ttl : "untitled");
         $("<h1>",{text: q.ttl}).appendTo(h);
         var MAX = 50;
-        $("<h3>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
+        $("<div>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
