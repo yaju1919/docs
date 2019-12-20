@@ -121,7 +121,6 @@
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
-        q.edit = 0;
         $("title").text("簡易ホームページ作成ツール");
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
         q.ttl = addInput("タイトル", "ページのタイトル");
@@ -155,6 +154,7 @@
         var url = "";
         addBtn("URLを生成", function(){
             var array = [];
+            array.push(["edit","0"]);
             for(var k in q) {
                 if(!q[k].val) continue;
                 var value = q[k].val();
