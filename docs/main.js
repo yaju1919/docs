@@ -181,17 +181,17 @@
         function addBtn_toggle(title, func, default_flag){
             var flag;
             function set(bool){
-                flag = bool ? '1' : '0';
+                flag = bool;
                 btn.css("background-color", flag ? "orange" : "gray");
                 check.prop("checked", flag);
                 if(func) func(flag);
             }
             var btn = addBtn(title, function(){
                 set(!flag);
-            }).append(check);
+            });
             var check = $("<input>",{type:"checkbox"}).prependTo(btn);
             set(default_flag);
-            return { val: function(){ return flag; } };
+            return { val: function(){ return flag ? '1' : '0'; } };
         }
     }
     //---------------------------------------------------------------------------------
