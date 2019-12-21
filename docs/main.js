@@ -126,6 +126,8 @@
         $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。");
         $("<h2>").appendTo(h).html("どこからでもアクセスできるURLを生成し、他人と共有しましょう。");
         $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/docs/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
+        $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"})
+        h.append("<br>");
         q.ttl = addInput("タイトル", "ページのタイトル");
         q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
         q.repeat = addBtn_toggle("背景の画像を並べて表示する");
