@@ -142,7 +142,8 @@
         $("<option>",{text:"右寄り"}).val(3).appendTo(q.pos);
         q.pos.val(2);
         h.append("<br>");
-        q.auto = addBtn_toggle("自動的にリンク化をしない");
+        q.auto = addBtn_toggle("自動的なURLのリンク化を無効");
+        h.append("<br>");
         function shape(){
             var text = q.text.val();
             q.text.height((text.split('\n').length + 2) + "em");
