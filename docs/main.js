@@ -6,7 +6,7 @@
             if(isNaN(num)) return NaN;
             var str = "", v = num;
             while(v !== 0){
-                v = parseInt(v);
+                v = Math.floor(v);
                 str = base[v % len] + str;
                 v /= len;
             }
