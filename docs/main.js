@@ -129,6 +129,7 @@
         h.append("<br>");
         $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
         h.append("<br>");
+        h.append("<br>");
         q.ttl = addInput("タイトル", "ページのタイトル");
         q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
         q.repeat = addBtn_toggle("背景の画像を並べて表示する");
@@ -148,6 +149,7 @@
         q.pos.val(2);
         h.append("<br>");
         q.auto = addBtn_toggle("自動的なURLのリンク化を無効");
+        h.append("<br>");
         h.append("<br>");
         function shape(){
             var text = q.text.val();
