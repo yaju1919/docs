@@ -88,7 +88,7 @@
             "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
             padding: "1em"
         });
-        if(q.repeat !== '1') {
+        if(q.repeat === '0') {
             $("body").css({
                 "background-attachment": "fixed", // コンテンツの高さが画像の高さより大きい時、動かないように固定
                 "background-position": "center center",// 画像を常に天地左右の中央に配置
@@ -107,6 +107,7 @@
         $("<h1>",{text: q.ttl}).appendTo(h);
         var MAX = 50;
         $("<div>").html(String(q.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
+            if(q.auto === '0') return;
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
@@ -141,6 +142,7 @@
         $("<option>",{text:"右寄り"}).val(3).appendTo(q.pos);
         q.pos.val(2);
         h.append("<br>");
+        q.auto = addBtn_toggle("自動的にリンク化をしない");
         function shape(){
             var text = q.text.val();
             q.text.height((text.split('\n').length + 2) + "em");
