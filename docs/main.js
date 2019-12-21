@@ -113,12 +113,45 @@
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
             var btm = url.match(/\.[0-9a-zA-Z]+?$/);
             if(btm) {
+                var btm2 = btm.slice(1);
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
-                ].indexOf(btm[0].slice(1)) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
+                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
+                else if([
+                    "mp3","wma","wav","aac","ogg","m4a","flac"
+                ].indexOf(btm2) !== -1) $("<audio>",{src: url, alt: url, controls: true}).appendTo(a.text(''));
+                else if([
+                    "mov","mp4","mpg","mpeg","avi","m4v","flv","wmv"
+                ].indexOf(btm2) !== -1) $("<video>",{src: url, alt: url, controls: true, preload: "none"}).appendTo(a.text(''));
+            }
+            var Domain = getDomain(url), m, sub;
+            switch(Domain){
+                case "youtu.be": // YouTube
+                    m = url.match(/youtu\.be\/([A-Za-z0-9_\-]+)/);
+                case "youtube.com":
+                    if(!m) m = url.match(/\?v=([A-Za-z0-9_\-]+)/);
+                    if(!m) break;
+                    sub = url.match(/t(=[0-9]+)/);
+                    sub = sub ? "?start" + sub[1] : "";
+                    $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + sub}).appendTo(a.text(''));
+                    break;
+                case "nicovideo.jp": // ニコニコ動画
+                case "nico.ms":
+                    m = url.match(/sm[0-9]+/);
+                    if(!m) break;
+                    sub = url.match(/from(=[0-9]+)/);
+                    sub = sub ? "?from" + sub[1] : "";
+                    $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + sub}).appendTo(a.text(''));
+                    break;
             }
             return (a).prop("outerHTML");
         })).appendTo(h);
+    }
+    function getFQDN(url){ // urlのホストを抽出
+        return url.replace(/^.+?\/\/|\/.*$/g,"");
+    }
+    function getDomain(url){ // urlのドメインを抽出(サードレベルドメイン非対応)
+        return getFQDN(url).split(".").slice(-2).join(".");
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
