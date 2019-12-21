@@ -113,7 +113,7 @@
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
             var btm = url.match(/\.[0-9a-zA-Z]+?$/);
             if(btm) {
-                var btm2 = btm.slice(1);
+                var btm2 = btm[0].slice(1);
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
                 ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
