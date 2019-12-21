@@ -123,7 +123,9 @@
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
-        $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。<br>URLを作成し、他人と共有できます。");
+        $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。");
+        $("<h2>").appendTo(h).html("どこからでもアクセスできるURLを生成し、他人と共有しましょう。");
+        $("<h2>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/docs/?edit=1」を「?edit=0」に変えると再編集ができます。");
         q.ttl = addInput("タイトル", "ページのタイトル");
         q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
         q.repeat = addBtn_toggle("背景の画像を並べて表示する");
