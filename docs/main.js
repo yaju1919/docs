@@ -126,6 +126,7 @@
         $("<h1>",{text:"簡単な文書ページが作成できます。"}).appendTo(h);
         $("<h2>",{text:"どこからでもアクセスできるURLを生成し、他人と共有しましょう。"}).appendTo(h);
         $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/docs/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
+        h.append("<br>");
         $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
         h.append("<br>");
         q.ttl = addInput("タイトル", "ページのタイトル");
@@ -154,10 +155,10 @@
             show_length.text("現在の文字数:"+text.length);
         }
         q.text = $("<textarea>", {
-            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLタグが使用できます。"
+            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLが使用できます。"
         }).appendTo(h).keyup(shape).click(shape).css({
             width: "70%",
-            height: "4em"
+            height: "3em"
         });
         var show_length = $("<div>").appendTo(h);
         var url = "";
