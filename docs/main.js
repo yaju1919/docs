@@ -123,10 +123,10 @@
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
         $("title").text("簡易ホームページ作成ツール");
-        $("<h1>").appendTo(h).html("簡単な文書ページが作成できます。");
-        $("<h2>").appendTo(h).html("どこからでもアクセスできるURLを生成し、他人と共有しましょう。");
+        $("<h1>",{text:"簡単な文書ページが作成できます。"}).appendTo(h);
+        $("<h2>",{text:"どこからでもアクセスできるURLを生成し、他人と共有しましょう。"}).appendTo(h);
         $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/docs/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
-        $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"})
+        $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
         h.append("<br>");
         q.ttl = addInput("タイトル", "ページのタイトル");
         q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
@@ -154,9 +154,10 @@
             show_length.text("現在の文字数:"+text.length);
         }
         q.text = $("<textarea>", {
-            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。"
+            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLタグが使用できます。"
         }).appendTo(h).keyup(shape).click(shape).css({
-            width: "70%"
+            width: "70%",
+            height: "4em"
         });
         var show_length = $("<div>").appendTo(h);
         var url = "";
