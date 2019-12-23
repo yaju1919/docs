@@ -81,9 +81,14 @@
     //---------------------------------------------------------------------------------
     (q.edit === '0' ? view_mode : edit_mode)();
     function view_mode(){ // 閲覧モード
+        if(reg_URL.test(q.img)) {
+            $("body").css({
+                "background-image": "url(" + q.img + ")",
+                "background-color": "#464646", // 背景画像が読み込まれる前に表示される背景のカラー
+            });
+        }
+        else $("body").css({"background-color": q.img});
         $("body").css({
-            "background-image": q.img ? "url(" + q.img + ")" : "",
-            "background-color": "#464646", // 背景画像が読み込まれる前に表示される背景のカラー
             "color": q.font,
             "text-align": !q.pos || q.pos === "2" ? "center" : q.pos === "3" ? "right" : "left",
             padding: "1em"
@@ -164,11 +169,11 @@
         h.append("<br>");
         h.append("<br>");
         h.append("<br>");
-        q.ttl = addInput("タイトル", "ページのタイトル");
-        q.img = addInput("背景の画像", "画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
+        q.ttl = addInput("タイトル", "文書ページのタイトル");
+        q.img = addInput("下層背景の色or画像", "カラーコードor画像のURL").val("https://i.imgur.com/iJ16x8q.jpg");
         q.repeat = addBtn_toggle("背景の画像を並べて表示する");
-        q.color = addInput("背景の色", "RGB形式カラーコード").val("#000000");
-        q.alpha = addInput("背景の色の透過度", "0~1").attr({
+        q.color = addInput("上層背景の色", "RGB形式カラーコード").val("#000000");
+        q.alpha = addInput("上層背景の透過度", "0~1").attr({
             type: "range",
             min: 0,
             max: 1,
