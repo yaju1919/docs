@@ -1,0 +1,24 @@
+# docs
+This application allows you to create web pages with simple operations.
+Anyone can see the work by accessing the created URL.
+However, URLs are longer.
+Also works in Internet Explorer.
+
+# Dependency
+Programming language used; JavaScript, HTML
+
+# Demo
+Go to https://yaju1919.github.io/docs/
+This application works even with Internet Explorer.
+
+# Usage
+Complete the desired settings and press "URLを生成" button.
+
+# License
+This software is released under the MIT License, see LICENSE.
+
+# Authors
+name: yaju1919
+email: yaju1919ixgy@gmail.com
+
+# References
