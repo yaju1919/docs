@@ -196,7 +196,7 @@
             show_length.text("現在の文字数:"+text.length);
         }
         q.text = $("<textarea>", {
-            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLが使用できます。"
+            placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLが使用できます。scriptタグは1行で記述してください。"
         }).appendTo(h).keyup(shape).click(shape).css({
             width: "70%",
             height: "3em"
