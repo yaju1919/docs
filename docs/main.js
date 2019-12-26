@@ -212,7 +212,7 @@
                 if(value.length === 0) continue;
                 array.push([k, encode(value)]);
             }
-            url = location.origin + location.pathname + '?' + array.map(function(v){
+            url = location.href.replace(/\?.*$/g,"") + '?' + array.map(function(v){
                 return v.join('=');
             }).join('&');
             $("<div>",{text: "URLの長さ:"+url.length}).appendTo(show_url.empty());
