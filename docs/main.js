@@ -115,13 +115,13 @@
             if(q.auto && q.auto !== '0') return url;
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
-            var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
+            var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"}).css({"max-width":"90%"});
             var btm = url.match(/\.[0-9a-zA-Z]+?$/);
             if(btm) {
                 var btm2 = btm[0].slice(1);
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
-                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text('')).css({"max-width":"90%"});
+                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
                 else if([
                     "mp3","wma","wav","aac","ogg","m4a","flac"
                 ].indexOf(btm2) !== -1) $("<audio>",{src: url, alt: url, controls: true}).appendTo(a.text(''));
