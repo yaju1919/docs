@@ -115,19 +115,19 @@
             if(q.auto && q.auto !== '0') return url;
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
-            var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"}).css({"max-width":"90%"});
+            var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
             var btm = url.match(/\.[0-9a-zA-Z]+?$/);
             if(btm) {
-                var btm2 = btm[0].slice(1);
+                var btm2 = btm[0].slice(1), elm;
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
-                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
+                ].indexOf(btm2) !== -1) elm = $("<img>",{src: url, alt: url});
                 else if([
                     "mp3","wma","wav","aac","ogg","m4a","flac"
-                ].indexOf(btm2) !== -1) $("<audio>",{src: url, alt: url, controls: true}).appendTo(a.text(''));
+                ].indexOf(btm2) !== -1) elm = $("<audio>",{src: url, alt: url, controls: true});
                 else if([
                     "mov","mp4","mpg","mpeg","avi","m4v","flv","wmv"
-                ].indexOf(btm2) !== -1) $("<video>",{src: url, alt: url, controls: true, preload: "none"}).appendTo(a.text(''));
+                ].indexOf(btm2) !== -1) elm = $("<video>",{src: url, alt: url, controls: true, preload: "none"});
             }
             var Domain = getDomain(url), m, sub;
             switch(Domain){
@@ -138,7 +138,7 @@
                     if(!m) break;
                     sub = url.match(/t(=[0-9]+)/);
                     sub = sub ? "?start" + sub[1] : "";
-                    $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + sub}).appendTo(a.text(''));
+                    elm = $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + sub});
                     break;
                 case "nicovideo.jp": // ニコニコ動画
                 case "nico.ms":
@@ -146,9 +146,10 @@
                     if(!m) break;
                     sub = url.match(/from(=[0-9]+)/);
                     sub = sub ? "?from" + sub[1] : "";
-                    $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + sub}).appendTo(a.text(''));
+                    elm = $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + sub});
                     break;
             }
+            if(elm) elm.appendTo(a.text('')).css({"max-width":"90%"});
             return (a).prop("outerHTML");
         })).appendTo(h);
     }
