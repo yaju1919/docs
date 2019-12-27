@@ -121,7 +121,7 @@
                 var btm2 = btm[0].slice(1);
                 if([
                     "jpg","JPG","jpeg","JPEG","gif","png","bmp","svg","ico"
-                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text(''));
+                ].indexOf(btm2) !== -1) $("<img>",{src: url, alt: url}).appendTo(a.text('')).css({"max-width":"90%"});
                 else if([
                     "mp3","wma","wav","aac","ogg","m4a","flac"
                 ].indexOf(btm2) !== -1) $("<audio>",{src: url, alt: url, controls: true}).appendTo(a.text(''));
