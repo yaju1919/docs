@@ -161,9 +161,9 @@
     }
     //---------------------------------------------------------------------------------
     function edit_mode(){ // 編集モード
-        $("title").text("簡易ホームページ作成ツール");
-        $("<h1>",{text:"簡単な文書ページが作成できます。"}).appendTo(h);
-        $("<h2>",{text:"どこからでもアクセスできるURLを生成し、他人と共有しましょう。"}).appendTo(h);
+        $("title").text("Webページジェネレータ");
+        $("<h1>",{text:"手軽にWebページが作成できます。"}).appendTo(h);
+        $("<h2>",{text:"作ったURLを公開し、他人と共有してみよう。"}).appendTo(h);
         $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/docs/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
         h.append("<br>");
         $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
