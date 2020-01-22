@@ -1,19 +1,22 @@
 (function() {
     'use strict';
     function BaseN(base){ // N進数を作成するクラス
-        var len = base.length, reg = /^0+(?=.+$)/;
+        if(typeof base !== "string") return false; // error
+        var len = base.length;
+        if(len < 2) return false; // error
         this.encode = function(num){ // 10進数をN進数に変換
             if(isNaN(num)) return NaN;
             var str = "", v = num;
-            while(v !== 0){
+            if(!v) return base[0];
+            while(v){
                 v = Math.floor(v);
                 str = base[v % len] + str;
                 v /= len;
             }
-            return str.replace(reg,"");
+            return str.slice(1);
         };
         this.decode = function(str){ // N進数を10進数に変換
-            return String(str).replace(reg,"").split("").reverse().map(function(v,i){
+            return String(str).split("").reverse().map(function(v,i){
                 return base.indexOf(v) * Math.pow(len, i);
             }).reduce(function(total, v){
                 return total + v;
