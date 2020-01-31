@@ -45,24 +45,22 @@
                     "mov","mp4","mpg","mpeg","avi","m4v","flv","wmv"
                 ].indexOf(btm2) !== -1) elm = $("<video>",{src: url, alt: url, controls: true, preload: "none"});
             }
-            var Domain = yaju1919.getDomain(url), m, sub;
+            var Domain = yaju1919.getDomain(url),
+                m = url.match(/\?.*$/);
+            var query = m ? m[0] : '';
             switch(Domain.slice(-2).join('.')){
                 case "youtu.be": // YouTube
                     m = url.match(/youtu\.be\/([A-Za-z0-9_\-]+)/);
                 case "youtube.com":
                     if(!m) m = url.match(/\?v=([A-Za-z0-9_\-]+)/);
                     if(!m) break;
-                    sub = url.match(/t(=[0-9]+)/);
-                    sub = sub ? "?start" + sub[1] : "";
-                    elm = $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + sub});
+                    elm = $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + query});
                     break;
                 case "nicovideo.jp": // ニコニコ動画
                 case "nico.ms":
                     m = url.match(/sm[0-9]+/);
                     if(!m) break;
-                    sub = url.match(/from(=[0-9]+)/);
-                    sub = sub ? "?from" + sub[1] : "";
-                    elm = $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + sub});
+                    elm = $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + query});
                     break;
             }
             if(elm) elm.appendTo(a.text('')).css({"max-width":"90%"});
