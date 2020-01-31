@@ -146,7 +146,12 @@
                 return v.join('=');
             }).join('&');
             $("<div>",{text: "URLの長さ:"+url.length}).appendTo(show_url.empty());
-            $("<a>",{text: url, href: url, target: "_blank"}).appendTo(show_url);
+            $("<a>",{text: "作成したページの直リンク", href: url, target: "_blank"}).appendTo(show_url);
+            yaju1919.addInputText(show_url,{
+                title: "copy",
+                readonly: true,
+                textarea: true,
+            });
         });
         var show_url = $("<div>").appendTo(h);
     }
