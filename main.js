@@ -15,7 +15,7 @@
         if(reg_URL.test(p.img)) {
             yaju1919.setBgImage(p.img,{
                 color: p.color,
-                opacity: p.alpha
+                opacity: Number(p.alpha)
             });
         }
         else $("body").css({"background-color": p.img});
@@ -100,7 +100,7 @@
         q.alpha = yaju1919.addInputNumber(h,{
             title: "上層背景の透過度",
             placeholder: "0~1",
-            value: p.alpha||"0.4",
+            value: Number(p.alpha)||"0.4",
             int: false,
             min: 0,
             max: 1,
