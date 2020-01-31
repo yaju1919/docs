@@ -131,7 +131,8 @@
             value: p.text,
             change: function(v){
                 show_length.text("現在の文字数:"+v.length);
-            }
+            },
+            textarea: true,
         });
         addBtn("URLを生成", function(){
             var array = [];
