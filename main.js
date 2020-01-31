@@ -75,7 +75,7 @@
         $("<h2>",{text:"作ったURLを公開し、他人と共有してみよう。"}).appendTo(h);
         $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/page/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
         h.append("<br>");
-        $("<a>",{target:"_blank",href:"https://www2.x-feeder.info/docs/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
+        $("<a>",{target:"_blank",href:"https://www1.x-feeder.info/page/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
         h.append("<br>");
         h.append("<br>");
         h.append("<br>");
