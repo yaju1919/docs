@@ -96,7 +96,7 @@
             placeholder: "RGB形式カラーコード",
             value: p.color||"#000000",
         });
-        q.alpha = yaju1919.addInputText(h,{
+        q.alpha = yaju1919.addInputNumber(h,{
             title: "上層背景の透過度",
             placeholder: "0~1",
             value: p.alpha||"0.4",
@@ -104,19 +104,19 @@
             min: 0,
             max: 1,
         });
-        q.color = yaju1919.addInputText(h,{
+        q.font = yaju1919.addInputText(h,{
             title: "文字の色",
             placeholder: "RGB形式カラーコード",
-            value: p.color||"#FFFFFF",
+            value: q.font||"#FFFFFF",
         });
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
             list: {
-                "左寄り": 1,
-                "真ん中": 2,
-                "右寄り": 3,
+                "左寄り": '1',
+                "真ん中": '2',
+                "右寄り": '3',
             },
-            value: p.pos||2
+            value: p.pos||'2'
         });
         h.append("<br>");
         q.auto = yaju1919.addInputBool(h,{
