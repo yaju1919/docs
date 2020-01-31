@@ -143,7 +143,7 @@
                 var value = q[k]();
                 if(!value) continue;
                 if(value.length === 0) continue;
-                array.push([k, yaju1919.encode(value)]);
+                array.push([k, yaju1919.encode(String(value))]);
             }
             var url = location.href.replace(/\?.*$/g,"") + '?' + array.map(function(v){
                 return v.join('=');
