@@ -9,8 +9,8 @@
     var p = yaju1919.getParam();
     for(var k in p) p[k] = yaju1919.decode(p[k]);
     //---------------------------------------------------------------------------------
-    (p.edit === '0' ? view_mode : edit_mode)();
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
+    (p.edit === '0' ? view_mode : edit_mode)();
     function view_mode(){ // 閲覧モード
         if(reg_URL.test(p.img)) {
             yaju1919.setBgImage(p.img,{
@@ -128,7 +128,7 @@
         q.text = yaju1919.addInputText(h,{
             title: "本文",
             placeholder: "本文の内容をここに書いてください。\n画像の拡張子が付いているURLは画像化されます。\nHTMLが使用できます。scriptタグは1行で記述してください。",
-            value: p.text||"#FFFFFF",
+            value: p.text,
             change: function(v){
                 show_length.text("現在の文字数:"+v.length);
             }
