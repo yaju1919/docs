@@ -84,7 +84,8 @@
         q.ttl = yaju1919.addInputText(h,{
             title: "タイトル",
             placeholder: "文書ページのタイトル",
-            value: p.ttl
+            value: p.ttl,
+            hankaku: false,
         });
         q.img = yaju1919.addInputText(h,{
             title: "下層背景の色or画像",
@@ -133,6 +134,7 @@
                 show_length.text("現在の文字数:"+v.length);
             },
             textarea: true,
+            hankaku: false,
         });
         addBtn("URLを生成", function(){
             var array = [];
