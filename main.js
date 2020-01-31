@@ -100,7 +100,7 @@
         q.alpha = yaju1919.addInputNumber(h,{
             title: "上層背景の透過度[%]",
             placeholder: "0~100",
-            value: Number(p.alpha)||"40",
+            value: Number(p.alpha)||40,
             min: 0,
             max: 100,
         });
