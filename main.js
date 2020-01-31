@@ -15,7 +15,7 @@
         if(reg_URL.test(p.img)) {
             yaju1919.setBgImage(p.img,{
                 color: p.color,
-                opacity: Number(p.alpha)
+                opacity: Number(p.alpha)/100
             });
         }
         else $("body").css({"background-color": p.img});
@@ -98,12 +98,11 @@
             value: p.color||"#000000",
         });
         q.alpha = yaju1919.addInputNumber(h,{
-            title: "上層背景の透過度",
-            placeholder: "0~1",
-            value: Number(p.alpha)||"0.4",
-            int: false,
+            title: "上層背景の透過度[%]",
+            placeholder: "0~100",
+            value: Number(p.alpha)||"40",
             min: 0,
-            max: 1,
+            max: 100,
         });
         q.font = yaju1919.addInputText(h,{
             title: "文字の色",
