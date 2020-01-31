@@ -149,6 +149,7 @@
             $("<a>",{text: "作成したページの直リンク", href: url, target: "_blank"}).appendTo(show_url);
             yaju1919.addInputText(show_url,{
                 title: "copy",
+                value: url,
                 readonly: true,
                 textarea: true,
             });
