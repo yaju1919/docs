@@ -88,26 +88,26 @@
             hankaku: false,
         });
         q.img = yaju1919.addInputText(h,{
-            title: "下層背景の色or画像",
-            placeholder: "カラーコードor画像のURL",
+            title: "画像",
+            placeholder: "画像のURL",
             value: p.img||"https://illustimage.com/photo/9388.png?20190127",
         });
         q.color = yaju1919.addInputText(h,{
-            title: "上層背景の色",
+            title: "フィルタの色",
             placeholder: "RGB形式カラーコード",
-            value: p.color||"#000000",
+            value: p.color||"white",
         });
         q.alpha = yaju1919.addInputNumber(h,{
-            title: "上層背景の透過度[%]",
+            title: "フィルタの色の透過度[%]",
             placeholder: "0~100",
-            value: Number(p.alpha)||40,
+            value: Number(p.alpha)||90,
             min: 0,
             max: 100,
         });
         q.font = yaju1919.addInputText(h,{
             title: "文字の色",
             placeholder: "RGB形式カラーコード",
-            value: q.font||"#FFFFFF",
+            value: q.font||"black",
         });
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
