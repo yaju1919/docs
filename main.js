@@ -27,7 +27,7 @@
         $("title").text(p.ttl ? p.ttl : "untitled");
         $("<h1>",{text: p.ttl}).appendTo(h);
         var MAX = 50;
-        $("<div>").html(String(p.text).replace(/\n/g, "<br>").replace(reg_URL, function(url){
+        $("<div>").html(String(p.text||'').replace(/\n/g, "<br>").replace(reg_URL, function(url){
             if(p.auto && p.auto !== '0') return url;
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
