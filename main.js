@@ -10,7 +10,8 @@
     for(var k in p) p[k] = yaju1919.decode(p[k]);
     //---------------------------------------------------------------------------------
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
-    (p.edit === '1' ? edit_mode : view_mode)();
+    if(Object.keys(p).length) (p.edit === '1' ? edit_mode : view_mode)();
+    else edit_mode();
     function view_mode(){ // 閲覧モード
         if(reg_URL.test(p.img)) {
             yaju1919.setBgImage(p.img,{
