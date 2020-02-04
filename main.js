@@ -98,7 +98,7 @@
         q.alpha = yaju1919.addInputNumber(h,{
             title: "フィルタの色の透過度[%]",
             placeholder: "0~100",
-            value: Number(p.alpha)||90,
+            value: p.alpha||90,
             min: 0,
             max: 100,
         });
