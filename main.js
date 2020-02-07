@@ -118,7 +118,7 @@
         h.append("<br>");
         q.auto = yaju1919.addInputBool(h,{
             title: "自動的なURLのリンク化を無効",
-            value: p.auto
+            value: p.auto === '1'
         });
         h.append("<br>");
         h.append("<br>");
@@ -138,6 +138,7 @@
             for(var k in q) {
                 var value = q[k]();
                 if(!value || value.length === 0 || value === '0') continue;
+                if(yaju1919.judgeType(value,"Boolean")) value = 1;
                 array.push([k, yaju1919.encode(String(value))]);
             }
             var url = location.href.replace(/\?.*$/g,"") + '?' + array.map(function(v){
