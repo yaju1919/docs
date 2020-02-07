@@ -10,11 +10,12 @@
     for(var k in p) p[k] = yaju1919.decode(p[k]);
     //---------------------------------------------------------------------------------
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
-    if(Object.keys(p).length) (p.edit === '1' ? edit_mode : view_mode)();
-    else edit_mode();
+    var newFlag = !Object.keys(p).length;
+    if(newFlag) edit_mode();
+    else (p.edit === '1' ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         if(reg_URL.test(p.img)) {
-            yaju1919.setBgImage(p.img,{
+            yaju1919.setBgImg(p.img,{
                 color: p.color,
                 opacity: Number(p.alpha)/100
             });
@@ -89,37 +90,38 @@
         q.img = yaju1919.addInputText(h,{
             title: "画像",
             placeholder: "画像のURL",
-            value: p.img||"https://illustimage.com/photo/9388.png?20190127",
+            value: p.img||(newFlag?"https://illustimage.com/photo/9388.png?20190127":null),
         });
         q.color = yaju1919.addInputText(h,{
             title: "フィルタの色",
             placeholder: "RGB形式カラーコード",
-            value: p.color||"white",
+            value: p.color||(newFlag?"white":null),
         });
         q.alpha = yaju1919.addInputNumber(h,{
             title: "フィルタの色の透過度[%]",
             placeholder: "0~100",
-            value: p.alpha||90,
+            value: p.alpha||(newFlag?90:null),
             min: 0,
             max: 100,
         });
         q.font = yaju1919.addInputText(h,{
             title: "文字の色",
             placeholder: "RGB形式カラーコード",
-            value: q.font||"black",
+            value: q.font||(newFlag?"black":null),
         });
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
             list: {
-                "左寄り": '1',
-                "真ん中": '2',
-                "右寄り": '3',
+                "左寄り": 1,
+                "真ん中": 2,
+                "右寄り": 3,
             },
-            value: p.pos||'2'
+            value: p.pos||(newFlag?'2':null)
         });
         h.append("<br>");
         q.auto = yaju1919.addInputBool(h,{
-            title: p.auto||"自動的なURLのリンク化を無効"
+            title: "自動的なURLのリンク化を無効",
+            value: p.auto
         });
         h.append("<br>");
         h.append("<br>");
