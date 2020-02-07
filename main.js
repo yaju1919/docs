@@ -12,7 +12,7 @@
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     var newFlag = !Object.keys(p).length;
     if(newFlag) edit_mode();
-    else (p.edit === '1' ? edit_mode : view_mode)();
+    else (p.edit ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         if(reg_URL.test(p.img)) {
             yaju1919.setBgImg(p.img,{
