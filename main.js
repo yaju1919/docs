@@ -23,14 +23,14 @@
         else $("body").css({"background-color": p.img});
         $("body").css({
             "color": p.font,
-            "text-align": !p.pos || p.pos === "2" ? "center" : p.pos === "3" ? "right" : "left",
+            "text-align": p.pos === '1' ? "left" : p.pos === '2' ? "right" : "center",
             padding: "1em"
         });
-        $("title").text(p.ttl ? p.ttl : "untitled");
+        $("title").text(p.ttl);
         $("<h1>",{text: p.ttl}).appendTo(h);
         var MAX = 50;
         $("<div>").html(String(p.text||'').replace(/\n/g, "<br>").replace(reg_URL, function(url){
-            if(p.auto && p.auto !== '0') return url;
+            if(p.auto) return url;
             var url2 = url;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
@@ -75,7 +75,7 @@
         $("title").text("Webページジェネレータ");
         $("<h1>",{text:"手軽にWebページが作成できます。"}).appendTo(h);
         $("<h2>",{text:"作ったURLを公開し、他人と共有してみよう。"}).appendTo(h);
-        $("<small>").appendTo(h).html("作品ページのURLの「https://yaju1919.github.io/page/?edit=0」を「?edit=1」に変えて再度アクセスすると再編集ができます。");
+        $("<small>").appendTo(h).html("作品ページのURLのクエリパラメータに「&edit=1」を付け加えると再編集ができます。");
         h.append("<br>");
         $("<a>",{target:"_blank",href:"https://www1.x-feeder.info/page/",text:"作品はこちらで公開&保管できます。"}).appendTo(h);
         h.append("<br>");
@@ -112,11 +112,11 @@
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
             list: {
+                "真ん中": 0,
                 "左寄り": 1,
-                "真ん中": 2,
-                "右寄り": 3,
+                "右寄り": 2,
             },
-            value: p.pos||(newFlag?'2':null)
+            value: p.pos
         });
         h.append("<br>");
         q.auto = yaju1919.addInputBool(h,{
@@ -138,11 +138,9 @@
         });
         addBtn("URLを生成", function(){
             var array = [];
-            array.push(["edit","0"]);
             for(var k in q) {
                 var value = q[k]();
-                if(!value) continue;
-                if(value.length === 0) continue;
+                if(!value || value.length === 0 || value === '0') continue;
                 array.push([k, yaju1919.encode(String(value))]);
             }
             var url = location.href.replace(/\?.*$/g,"") + '?' + array.map(function(v){
