@@ -14,13 +14,10 @@
     if(newFlag) edit_mode();
     else (p.edit ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
-        if(reg_URL.test(p.img)) {
-            yaju1919.setBgImg(p.img,{
-                color: p.color,
-                opacity: Number(p.alpha)/100
-            });
-        }
-        else $("body").css({"background-color": p.img});
+        yaju1919.setBgImg(p.img,{
+            color: p.color,
+            opacity: Number(p.alpha)/100
+        });
         $("body").css({
             "color": p.font,
             "text-align": p.pos === '1' ? "left" : p.pos === '2' ? "right" : "center",
