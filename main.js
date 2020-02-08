@@ -8,6 +8,17 @@
     }
     var p = yaju1919.getParam();
     for(var k in p) p[k] = yaju1919.decode(p[k]);
+    var alias = {
+        a: "ttl",
+        b: "img",
+        c: "color",
+        d: "alpha",
+        e: "font",
+        f: "pos",
+        g: "auto",
+        h: "text",
+    };
+    for(var k2 in alias) if(p[k2]) p[alias[k2]] = p[k2];
     //---------------------------------------------------------------------------------
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
     var newFlag = !Object.keys(p).length;
@@ -138,7 +149,11 @@
                 var value = q[k]();
                 if(!value || value.length === 0 || value === '0') continue;
                 if(yaju1919.judgeType(value,"Boolean")) value = 1;
-                array.push([k, yaju1919.encode(String(value))]);
+                var key = Object.keys(alias).filter(function(v){
+                    return alias[v] === k;
+                })[0];
+                if(!key) continue;
+                array.push([key, yaju1919.encode(String(value))]);
             }
             var url = location.href.replace(/\?.*$/g,"") + '?' + array.map(function(v){
                 return v.join('=');
