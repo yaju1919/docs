@@ -114,7 +114,7 @@
         q.font = yaju1919.addInputText(h,{
             title: "文字の色",
             placeholder: "RGB形式カラーコード",
-            value: q.font||(newFlag?"black":null),
+            value: p.font||(newFlag?"black":null),
         });
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
