@@ -58,15 +58,18 @@
                 }
             }
             var m,Domain = yaju1919.getDomain(url);
-            var query = '?' + (url.split('?')[1] || '');
+            var query = url.split('?')[1] || '';
             switch(Domain.slice(-2).join('.')){
                 case "youtu.be": // YouTube
                     m = url.match(/youtu\.be\/([A-Za-z0-9_\-]+)/);
                 case "youtube.com":
                     if(!m) m = url.match(/[\?&]v=([A-Za-z0-9_\-]+)/);
                     if(!m) break;
+                    query = query.split('&').filter(function(v){
+                        return v.split('=')[0] !== 'v';
+                    }).join('&');
                     elm = $("<iframe>",{
-                        src: "//www.youtube.com/embed/" + m[1] + query
+                        src: "//www.youtube.com/embed/" + m[1] + '?' + query
                     });
                     video_flag = true;
                     break;
@@ -75,7 +78,7 @@
                     m = url.match(/sm[0-9]+/);
                     if(!m) break;
                     elm = $("<iframe>",{
-                        src: "//embed.nicovideo.jp/watch/" + m[0] + query
+                        src: "//embed.nicovideo.jp/watch/" + m[0] + '?' + query
                     });
                     video_flag = true;
                     break;
