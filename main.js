@@ -81,15 +81,14 @@
                     break;
             }
             if(elm) {
-                elm.appendTo(a.text(''));
+                elm.appendTo(a.text('')).css({maxWidth: "90%"});
                 if(video_flag){
-                    var w = $(window).width();
+                    var w = $(window).width() * 0.9;
                     elm.css({
                         width: w,
                         height: w * (9/16) // 16:9
                     });
                 }
-                else elm.css({maxWidth: "90%"});
             };
             return (a).prop("outerHTML");
         })).appendTo(h);
