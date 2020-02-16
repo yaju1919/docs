@@ -83,6 +83,10 @@
             if(elm) {
                 elm.appendTo(a.text('')).css({maxWidth: "90%"});
                 if(video_flag){
+                    elm.css({
+                        minWidth: "560",
+                        minHeight: "315",
+                    });
                     function resize(){
                         var w = $(window).width() * 0.7;
                         elm.css({
