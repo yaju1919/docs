@@ -38,7 +38,7 @@
         var MAX = 50;
         $("<div>").html(String(p.text||'').replace(/\n/g, "<br>").replace(reg_URL, function(url){
             if(p.auto) return url;
-            var url2 = url;
+            var url2 = url, video_flag;
             if(url.length > MAX) url2 = url.slice(0,MAX) + '…';
             var a = $("<a>",{text: url2, href: url, src: url, target: "_blank"});
             var btm = url.match(/\.[0-9a-zA-Z]+?$/);
@@ -52,7 +52,10 @@
                 ].indexOf(btm2) !== -1) elm = $("<audio>",{src: url, alt: url, controls: true});
                 else if([
                     "mov","mp4","mpg","mpeg","avi","m4v","flv","wmv"
-                ].indexOf(btm2) !== -1) elm = $("<video>",{src: url, alt: url, controls: true, preload: "none"});
+                ].indexOf(btm2) !== -1) {
+                    elm = $("<video>",{src: url, alt: url, controls: true, preload: "none"});
+                    video_flag = true;
+                }
             }
             var m,Domain = yaju1919.getDomain(url);
             var query = '?' + (url.split('?')[1] || '');
@@ -65,6 +68,7 @@
                     elm = $("<iframe>",{
                         src: "//www.youtube.com/embed/" + m[1] + query
                     });
+                    video_flag = true;
                     break;
                 case "nicovideo.jp": // ニコニコ動画
                 case "nico.ms":
@@ -73,16 +77,19 @@
                     elm = $("<iframe>",{
                         src: "//embed.nicovideo.jp/watch/" + m[0] + query
                     });
+                    video_flag = true;
                     break;
             }
             if(elm) {
-                elm.appendTo(a.text('')).css({"max-width":"90%"}).attr({
-                    width:"560",
-                    height:"315",
-                    frameborder:"0",
-                    allow:"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
-                    allowfullscreen: true
-                });
+                elm.appendTo(a.text(''));
+                if(video_flag){
+                    var w = $(window).width();
+                    elm.css({
+                        width: w,
+                        height: w * (9/16) // 16:9
+                    });
+                }
+                else elm.css({maxWidth: "90%"});
             };
             return (a).prop("outerHTML");
         })).appendTo(h);
