@@ -88,7 +88,7 @@
                         minHeight: "315",
                     });
                     function resize(){
-                        var w = $(window).width() * 0.7;
+                        var w = $(window).width() * 0.8;
                         elm.css({
                             width: w,
                             height: w * (9/16) // 16:9
