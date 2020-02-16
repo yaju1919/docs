@@ -21,8 +21,7 @@
     for(var k2 in alias) if(p[k2]) p[alias[k2]] = p[k2];
     //---------------------------------------------------------------------------------
     var reg_URL = /(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)/g;
-    var newFlag = !Object.keys(p).length;
-    if(newFlag) edit_mode();
+    if(!Object.keys(p).length) edit_mode();
     else (p.edit ? edit_mode : view_mode)();
     function view_mode(){ // 閲覧モード
         yaju1919.setBgImg(p.img,{
@@ -97,24 +96,24 @@
         q.img = yaju1919.addInputText(h,{
             title: "画像",
             placeholder: "画像のURL",
-            value: p.img||(newFlag?"https://illustimage.com/photo/9388.png?20190127":null),
+            value: p.img,
         });
         q.color = yaju1919.addInputText(h,{
             title: "フィルタの色",
             placeholder: "RGB形式カラーコード",
-            value: p.color||(newFlag?"white":null),
+            value: p.color,
         });
         q.alpha = yaju1919.addInputNumber(h,{
             title: "フィルタの濃さ[%]",
             placeholder: "0~100",
-            value: p.alpha||(newFlag?90:null),
+            value: p.alpha,
             min: 0,
             max: 100,
         });
         q.font = yaju1919.addInputText(h,{
             title: "文字の色",
             placeholder: "RGB形式カラーコード",
-            value: p.font||(newFlag?"black":null),
+            value: p.font,
         });
         q.pos = yaju1919.addSelect(h,{
             title: "配置",
