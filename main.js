@@ -62,16 +62,28 @@
                 case "youtube.com":
                     if(!m) m = url.match(/[\?&]v=([A-Za-z0-9_\-]+)/);
                     if(!m) break;
-                    elm = $("<iframe>",{src: "//www.youtube.com/embed/" + m[1] + query});
+                    elm = $("<iframe>",{
+                        src: "//www.youtube.com/embed/" + m[1] + query
+                    });
                     break;
                 case "nicovideo.jp": // ニコニコ動画
                 case "nico.ms":
                     m = url.match(/sm[0-9]+/);
                     if(!m) break;
-                    elm = $("<iframe>",{src: "//embed.nicovideo.jp/watch/" + m[0] + query});
+                    elm = $("<iframe>",{
+                        src: "//embed.nicovideo.jp/watch/" + m[0] + query
+                    });
                     break;
             }
-            if(elm) elm.appendTo(a.text('')).css({"max-width":"90%"});
+            if(elm) {
+                elm.appendTo(a.text('')).css({"max-width":"90%"}).attr({
+                    width:"560",
+                    height:"315",
+                    frameborder:"0",
+                    allow:"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
+                    allowfullscreen: true
+                });
+            };
             return (a).prop("outerHTML");
         })).appendTo(h);
     }
