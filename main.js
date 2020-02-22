@@ -83,17 +83,17 @@
                     video_flag = true;
                     break;
             }
+            function resize(){
+                var w = $(window).width() * 0.9;
+                if(!w) return setTimeout(resize, 500);
+                elm.css({
+                    width: w,
+                    height: w * (9/16) // 16:9
+                });
+            }
             if(elm) {
                 elm.appendTo(a.text('')).css({maxWidth: "90%"});
                 if(video_flag){
-                    function resize(){
-                        var w = $(window).width() * 0.9;
-                        if(!w) return setTimeout(resize, 500);
-                        elm.css({
-                            width: w,
-                            height: w * (9/16) // 16:9
-                        });
-                    }
                     resize();
                     $(window).resize(resize);
                 }
