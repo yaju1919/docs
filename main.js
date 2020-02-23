@@ -97,7 +97,7 @@
                     resize();
                     $(window).resize(resize);
                 }
-            };
+            }
             return (a).prop("outerHTML");
         })).appendTo(h);
     }
