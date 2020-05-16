@@ -204,7 +204,7 @@
                 return v.replace(/^https:\/\/imgur\.com\//,'');
             }
         });
-        $("<a>",{target:"_blank",href:"https://yaju1919.github.io/str-to-img/",text:"画像を作成するには。"}).appendTo(h);
+        $("<a>",{target:"_blank",href:"https://yaju1919.github.io/str-to-img/",text:"画像を作成するツールのリンク。"}).appendTo(h);
         h.append("<br>");
         h.append("<br>");
         var show_length = $("<div>").appendTo(h);
