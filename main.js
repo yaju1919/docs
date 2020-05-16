@@ -17,6 +17,7 @@
         f: "pos",
         g: "auto",
         h: "text",
+        i: "imgur",
     };
     for(var k2 in alias) if(p[k2]) p[alias[k2]] = p[k2];
     //---------------------------------------------------------------------------------
@@ -193,6 +194,16 @@
             title: "自動的なURLのリンク化を無効",
             value: p.auto === '1'
         });
+        h.append("<br>");
+        q.imgur = yaju1919.addInputText(h,{
+            title: "JavaScriptを圧縮した画像",
+            placeholder: "imgurの画像ID",
+            value: p.imgur,
+            change: function(v){
+                return v.replace(/^https:\/\/imgur\.com\//,'');
+            }
+        });
+        $("<a>",{target:"_blank",href:"https://yaju1919.github.io/str-to-img/",text:"画像を作成するには"}).appendTo(h);
         h.append("<br>");
         h.append("<br>");
         var show_length = $("<div>").appendTo(h);
