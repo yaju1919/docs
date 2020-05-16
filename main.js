@@ -195,6 +195,7 @@
             value: p.auto === '1'
         });
         h.append("<br>");
+        h.append("<br>");
         q.imgur = yaju1919.addInputText(h,{
             title: "JavaScriptを圧縮した画像",
             placeholder: "imgurの画像ID",
