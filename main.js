@@ -147,8 +147,7 @@
         $("<h1>",{text:"手軽にWebページが作成できます。"}).appendTo(h);
         $("<h2>",{text:"作ったURLを公開し、他人と共有してみよう。"}).appendTo(h);
         $("<small>").appendTo(h).html("作品ページのURLのクエリパラメータに「&edit=1」を付け加えると再編集ができます。");
-        h.append("<br>");
-        h.append("<br>");
+        h.append("<br><br>");
         q.ttl = yaju1919.addInputText(h,{
             title: "タイトル",
             placeholder: "文書ページのタイトル",
